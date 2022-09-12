@@ -9,15 +9,7 @@ import UIKit
 import SnapKit
 
 class DefaultTableViewCell: UITableViewCell {
-    
-    var cellSetups: CellSetups? {
-        didSet {
-            iconImage.image = cellSetups?.icon
-            iconView.backgroundColor = cellSetups?.iconBackgroundColor
-            leftLabel.text = cellSetups?.nameCell
-        }
-    }
-    
+
     // MARK: - UI Elements
     
     lazy var iconView: UIImageView = {
@@ -86,5 +78,13 @@ class DefaultTableViewCell: UITableViewCell {
             $0.centerY.equalTo(iconView)
             $0.leading.equalTo(iconView.snp.trailing).offset(10)
         }
+    }
+
+    // MARK: - Configuration
+
+    func configuration(data: CellSetups) {
+        iconImage.image = data.icon
+        iconView.backgroundColor = data.iconBackgroundColor
+        leftLabel.text = data.nameCell
     }
 }

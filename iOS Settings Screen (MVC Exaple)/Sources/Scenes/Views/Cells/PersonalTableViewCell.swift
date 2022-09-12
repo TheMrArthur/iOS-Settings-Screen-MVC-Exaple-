@@ -10,13 +10,6 @@ import SnapKit
 
 class PersonalTableViewCell: DefaultTableViewCell {
 
-    override var cellSetups: CellSetups? {
-        didSet {
-            personalImage.image = cellSetups?.personalImage
-            personalNameLabel.text = cellSetups?.personalName
-        }
-    }
-
     // MARK: - UI Elements
 
     private lazy var personalImage: UIImageView = {
@@ -102,5 +95,13 @@ class PersonalTableViewCell: DefaultTableViewCell {
             $0.leading.equalTo(infoImage.snp.trailing).offset(15)
             $0.trailing.equalToSuperview().inset(10)
         }
+    }
+
+    // MARK: - Configuration
+
+    override func configuration(data: CellSetups) {
+        super.configuration(data: data)
+        personalImage.image = data.personalImage
+        personalNameLabel.text = data.personalName
     }
 }

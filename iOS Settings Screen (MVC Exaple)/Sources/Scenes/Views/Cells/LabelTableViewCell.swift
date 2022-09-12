@@ -9,13 +9,7 @@ import UIKit
 import SnapKit
 
 class LabelTableViewCell: DefaultTableViewCell {
-    
-    override var cellSetups: CellSetups? {
-        didSet {
-            labelCell.text = cellSetups?.rightLabel
-        }
-    }
-    
+
     // MARK: - UI Elements
     
     private lazy var labelCell: UILabel = {
@@ -49,5 +43,12 @@ class LabelTableViewCell: DefaultTableViewCell {
             $0.centerY.equalTo(leftLabel)
             $0.trailing.equalToSuperview().inset(40)
         }
+    }
+
+    // MARK: - Configuration
+
+    override func configuration(data: CellSetups) {
+        super.configuration(data: data)
+        labelCell.text = data.rightLabel
     }
 }

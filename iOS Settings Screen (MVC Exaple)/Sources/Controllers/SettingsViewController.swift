@@ -45,67 +45,71 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         return SetupSections.setupSections[section].setupItem.count
     }
 
+    func universalCell<T: UITableViewCell>(cell: T,
+                                           accessoryType: UITableViewCell.AccessoryType,
+                                           _ indexPath: IndexPath,
+                                           _ tableView: UITableView) -> T {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(T.self)", for: indexPath) as? T
+        else { return UITableViewCell() as? T ?? cell }
+        return cell
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell") as? DefaultTableViewCell
-        cell?.cellSetups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
-        cell?.accessoryType = .disclosureIndicator
 
-        let switchTableCell = tableView.dequeueReusableCell(withIdentifier: "switchCell") as? SwitchTableViewCell
-        switchTableCell?.cellSetups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
-        switchTableCell?.selectionStyle = .none
-        switchTableCell?.accessoryView = nil
+        let content = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
 
-        let labelTableCell = tableView.dequeueReusableCell(withIdentifier: "labelCell") as? LabelTableViewCell
-        labelTableCell?.cellSetups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
-        labelTableCell?.accessoryType = .disclosureIndicator
-
-        let imageTableCell = tableView.dequeueReusableCell(withIdentifier: "imageCell") as? ImageTableViewCell
-        imageTableCell?.cellSetups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
-        imageTableCell?.accessoryType = .disclosureIndicator
-
-        let personalTableCell = tableView.dequeueReusableCell(withIdentifier: "personalCell") as? PersonalTableViewCell
-        personalTableCell?.cellSetups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
-        personalTableCell?.accessoryType = .disclosureIndicator
-
-        let findingTableCell = tableView.dequeueReusableCell(withIdentifier: "findingCell") as? FindingTableViewCell
-        findingTableCell?.cellSetups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
-        findingTableCell?.accessoryView = nil
-        findingTableCell?.selectionStyle = .none
-
-        switch SetupSections.setupSections[indexPath.section].setupItem[indexPath.row].cellType {
+        switch content.cellType {
             case .defaultCell:
-                return cell ?? UITableViewCell()
+                let cell = universalCell(cell: DefaultTableViewCell(), accessoryType: .disclosureIndicator, indexPath, tableView)
+                cell.configuration(data: content)
+                return cell
             case .switchCell:
-                return switchTableCell ?? UITableViewCell()
+                let cell = universalCell(cell: SwitchTableViewCell(), accessoryType: .disclosureIndicator, indexPath, tableView)
+                cell.configuration(data: content)
+                cell.selectionStyle = .none
+                cell.accessoryView = nil
+                return cell
             case .labelCell:
-                return labelTableCell ?? UITableViewCell()
+                let cell = universalCell(cell: LabelTableViewCell(), accessoryType: .disclosureIndicator, indexPath, tableView)
+                cell.configuration(data: content)
+                return cell
             case .imageCell:
-                return imageTableCell ?? UITableViewCell()
+                let cell = universalCell(cell: ImageTableViewCell(), accessoryType: .disclosureIndicator, indexPath, tableView)
+                cell.configuration(data: content)
+                return cell
             case .personalInfoCell:
-                return personalTableCell ?? UITableViewCell()
+                let cell = universalCell(cell: PersonalTableViewCell(), accessoryType: .disclosureIndicator, indexPath, tableView)
+                cell.configuration(data: content)
+                return cell
             case .findingCell:
-                return findingTableCell ?? UITableViewCell()
+                let cell = universalCell(cell: FindingTableViewCell(), accessoryType: .disclosureIndicator, indexPath, tableView)
+                cell.configuration(data: content)
+                cell.accessoryView = nil
+                cell.selectionStyle = .none
+                return cell
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        let setups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
+
         func detailSettings() {
             let detailSettingsViewController = DetailSettingsViewController()
             tableView.deselectRow(at: indexPath, animated: true)
-            detailSettingsViewController.viewSetups = SetupSections.setupSections[indexPath.section].setupItem[indexPath.row]
+            detailSettingsViewController.viewSetups = setups
             navigationController?.pushViewController(detailSettingsViewController, animated: true)
         }
 
-        switch SetupSections.setupSections[indexPath.section].setupItem[indexPath.row].cellType {
+        switch setups.cellType {
             case .switchCell, .findingCell:
                 return
             case .personalInfoCell:
                 detailSettings()
-                print("\(SetupSections.setupSections[indexPath.section].setupItem[indexPath.row].personalName ?? "")")
+                print("\(setups.personalName ?? "")")
             default:
                 detailSettings()
-                print("\(SetupSections.setupSections[indexPath.section].setupItem[indexPath.row].nameCell ?? "")")
+                print("\(setups.nameCell ?? "")")
         }
     }
 
