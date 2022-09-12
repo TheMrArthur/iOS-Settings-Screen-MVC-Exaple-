@@ -47,9 +47,9 @@ class SwitchTableViewCell: DefaultTableViewCell {
     
     @objc private func switchPressed(_ sender: UISwitch) {
         if sender.isOn {
-            print("\(cellSetups?.nameCell ?? "") is On")
+            print("\(leftLabel.text ?? "switch") is On")
         } else {
-            print ("\(cellSetups?.nameCell ?? "") is Off")
+            print ("\(leftLabel.text ?? "switch") is Off")
         }
     }
 }

@@ -9,13 +9,7 @@ import UIKit
 import SnapKit
 
 class ImageTableViewCell: DefaultTableViewCell {
-    
-    override var cellSetups: CellSetups? {
-        didSet {
-            imageCell.image = cellSetups?.rightImage
-        }
-    }
-    
+
     // MARK: - UI Elements
     
     private lazy var imageCell: UIImageView = {
@@ -64,5 +58,12 @@ class ImageTableViewCell: DefaultTableViewCell {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview()
         }
+    }
+
+    // MARK: - Configuration
+
+    override func configuration(data: CellSetups) {
+        super.configuration(data: data)
+        imageCell.image = data.rightImage
     }
 }

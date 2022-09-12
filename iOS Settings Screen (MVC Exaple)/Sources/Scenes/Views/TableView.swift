@@ -17,12 +17,12 @@ final class TableView: UIView {
         tableView.backgroundColor = .black
         tableView.separatorColor = .darkGray
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 55, bottom: 0, right: 0)
-        tableView.register(DefaultTableViewCell.self, forCellReuseIdentifier: "defaultCell")
-        tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: "switchCell")
-        tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
-        tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: "imageCell")
-        tableView.register(PersonalTableViewCell.self, forCellReuseIdentifier: "personalCell")
-        tableView.register(FindingTableViewCell.self, forCellReuseIdentifier: "findingCell")
+        tableView.register(DefaultTableViewCell.self, forCellReuseIdentifier: "DefaultTableViewCell")
+        tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: "SwitchTableViewCell")
+        tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "LabelTableViewCell")
+        tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: "ImageTableViewCell")
+        tableView.register(PersonalTableViewCell.self, forCellReuseIdentifier: "PersonalTableViewCell")
+        tableView.register(FindingTableViewCell.self, forCellReuseIdentifier: "FindingTableViewCell")
         return tableView
     }()
 
